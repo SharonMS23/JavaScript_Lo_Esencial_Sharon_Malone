@@ -1,0 +1,127 @@
+<!Doctype html>
+
+<html>
+<head>
+		<title>Proyecto JavaScript</title>
+</head>
+	
+<body>
+	
+	<h1> Proyecto JavaScript </h1>
+	<h2> Menú de Opciones </h2>
+
+	<ul>
+		<li> Mostrar Lista de Alumnos <input type="button" name="MostrarAlumnos" value="Mostrar" onclick="mostrarAlumnos(this)"></li>
+		<li> Calcular Nota Promedio <input type="button" name="CalcularNota" value="Calcular" onclick="CalcularNota(this)"></li>
+		<li> Mostrar Alumno con Mayor Nota <input type="button" name="AlumnoMayor" value="Mostrar" onclick="AlumnoMayor(this)"></li>
+		<li> Mostrar Alumno con Menor Nota <input type="button" name="AlumnoMenor" value="Mostrar" onclick="AlumnoMenor(this)"></li>
+	</ul>
+
+	<div id="mostrarResultados" style="background-color: orange; width: 320px;">
+		
+	</div>
+
+</body>
+
+<script type="text/javascript">
+		
+		var data = '{"alumnos": ['+
+							   '{"codigo": "EP0001", "nombre": "Sharon Malone Salas", "nota": 4.0},'+
+							   '{"codigo": "EP0002", "nombre": "Susan Reyes Lujan", "nota": 12.50},'+
+							   '{"codigo": "EP0003", "nombre": "Sandro Zuñiga Espinoza", "nota": 14.00},'+
+							   '{"codigo": "EP0004", "nombre": "Paola Bravo Bravo", "nota": 17.00},'+
+							   '{"codigo": "EP0005", "nombre": "Sebastian Yatra Yatra", "nota": 18.00},'+
+							   '{"codigo": "EP0006", "nombre": "Rosa Huamanga Sotomayor", "nota": 19.00},'+
+							   '{"codigo": "EP0007", "nombre": "Stephany Torres Vega", "nota": 3.00},'+
+							   '{"codigo": "EP0008", "nombre": "Yessenia Huamani Yabar", "nota": 9.00},'+
+							   '{"codigo": "EP0009", "nombre": "Rossmery Yarleque Rosales", "nota": 15.50},'+
+							   '{"codigo": "EP0010", "nombre": "Erika Yañez Soto", "nota": 2.50}'+
+					']}';
+
+
+		var dataFormat = JSON.parse(data);
+
+		function mostrarAlumnos (json){
+			
+			var mostrar = "<br>----------------- Lista de Alumnos ------------------ <br><br>";
+			var i;
+			
+			for(i=0; i<dataFormat.alumnos.length; i++){
+
+				mostrar +="Codigo: " + dataFormat.alumnos[i].codigo + "<br>" +
+						  "Nombre: " + dataFormat.alumnos[i].nombre + "<br>" +
+						  "Nota: " + dataFormat.alumnos[i].nota + "<br>" +
+						  "------------------------------------------- <br>";
+				
+			}
+
+			document.getElementById("mostrarResultados").innerHTML = mostrar;
+			
+		}
+
+		function CalcularNota (json){
+
+			var sumaNota = 0;
+			var i = 0;
+			var cant = 0;
+
+			for(i; i<dataFormat.alumnos.length; i++){
+
+				sumaNota += dataFormat.alumnos[i].nota;
+				cant ++;
+
+			}
+
+			document.getElementById("mostrarResultados").innerHTML = "<br>La Nota Promedio es: " + sumaNota/cant + "<br><br>";
+
+		}
+
+		function AlumnoMayor (json){
+			
+			var posicionMayor = 0;
+			var nota = 0;
+			var i = 0;
+
+			for (i; i<dataFormat.alumnos.length; i++){
+
+				if(dataFormat.alumnos[i].nota >= nota){
+					
+					posicionMayor = i;
+					nota = dataFormat.alumnos[i].nota;
+				
+				}
+
+			}
+
+			document.getElementById("mostrarResultados").innerHTML = "<br>El Alumno con Mayor Nota es: <br><br>" + 
+																	 "Codigo: " + dataFormat.alumnos[posicionMayor].codigo + "<br>" +
+																	 "Nombre: " + dataFormat.alumnos[posicionMayor].nombre + "<br>" + 
+																	 "Nota: " + nota + "<br><br>";
+		}
+
+		function AlumnoMenor (json){
+			
+			var posicionMenor = 0;
+			var nota = 0;
+			var i = 1;
+
+			nota = dataFormat.alumnos[0].nota;
+
+			for(i; i<dataFormat.alumnos.length; i++){
+				
+				if(dataFormat.alumnos[i].nota <= nota){
+
+					posicionMenor = i;
+					nota = dataFormat.alumnos[i].nota;
+
+				}
+			}
+
+			document.getElementById("mostrarResultados").innerHTML = "<br>El Alumno con Menor Nota es: <br><br>" + 
+																	 "Codigo: " + dataFormat.alumnos[posicionMenor].codigo + "<br>" +
+																	 "Nombre: " + dataFormat.alumnos[posicionMenor].nombre + "<br>" + 
+																	 "Nota: " + nota + "<br><br>";
+		}
+
+</script>
+</html>
